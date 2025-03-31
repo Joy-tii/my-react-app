@@ -2,44 +2,35 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 export default function App() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
+
   const [task, setTask] = useState("");
   const [editIndex, setEditIndex] = useState(null);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    JSON.parse(localStorage.getItem("darkMode")) || false
+  );
 
-  // 🔵 Load tasks from localStorage when component mounts
+  // Save tasks to localStorage whenever tasks change
   useEffect(() => {
-    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-    if (savedTasks && savedTasks.length > 0) {
-      setTasks(savedTasks);
-    }
-  }, []);
-
-  // 🔵 Save tasks to localStorage whenever tasks change
-  useEffect(() => {
-    if (tasks.length > 0) {
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  // Save dark mode preference in localStorage
   useEffect(() => {
-    localStorage.removeItem("tasks");  // 🔥 Old tasks delete on first load
-  }, []);
-  
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+    if (darkMode) {
+      document.body.classList.add("dark-mode");
+      document.body.classList.remove("light-mode");
+    } else {
+      document.body.classList.add("light-mode");
+      document.body.classList.remove("dark-mode");
+    }
+  }, [darkMode]);
 
-  // 🔵 Toggle Dark Mode Effect
-useEffect(() => {
-  if (darkMode) {
-    document.body.classList.add("dark-mode");
-    document.body.classList.remove("light-mode");
-  } else {
-    document.body.classList.add("light-mode");
-    document.body.classList.remove("dark-mode");
-  }
-}, [darkMode]);
-
-
-  // 🔵 Add Task Function
+  // Add or Update Task
   const addTask = () => {
     if (task.trim() !== "") {
       let updatedTasks = [...tasks];
@@ -54,20 +45,27 @@ useEffect(() => {
     }
   };
 
-  // 🔵 Toggle Task Completion
+  // Handle Enter key press
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      addTask();
+    }
+  };
+
+  // Toggle Task Completion
   const toggleTask = (index) => {
     let updatedTasks = [...tasks];
     updatedTasks[index].completed = !updatedTasks[index].completed;
     setTasks(updatedTasks);
   };
 
-  // 🔵 Delete Task
+  // Delete Task
   const deleteTask = (index) => {
     let updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
   };
 
-  // 🔵 Edit Task
+  // Edit Task
   const editTask = (index) => {
     setTask(tasks[index].text);
     setEditIndex(index);
@@ -88,6 +86,7 @@ useEffect(() => {
             type="text"
             value={task}
             onChange={(e) => setTask(e.target.value)}
+            onKeyDown={handleKeyDown} // Enter press to add/update task
             placeholder="Enter a task..."
           />
           <button onClick={addTask}>{editIndex !== null ? "Update" : "Add"}</button>
@@ -102,7 +101,7 @@ useEffect(() => {
                   type="text"
                   value={task}
                   onChange={(e) => setTask(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && addTask()}
+                  onKeyDown={handleKeyDown}
                   autoFocus
                 />
               ) : (
