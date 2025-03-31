@@ -1,38 +1,204 @@
-.App {
-  text-align: center;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@keyframes gradientLight {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+@keyframes gradientDark {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+  background-size: 300% 300%;
+  animation: gradientLight 6s ease infinite;
+  transition: all 0.5s ease;
+  box-sizing: border-box;
+
+}
+
+.dark-mode {
+  background: linear-gradient(-45deg, #141e30, #243b55, #2c3e50, #000000);
+  animation: gradientDark 6s ease infinite;
+  transition: all 0.5s ease;
+}
+
+.header {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+h1 {
+  color: rgb(252, 252, 252);
+  font-size: 24px;
+  margin: 0;
+}
+
+.toggle-btn {
+  background: white;
+  border: none;
+  color: #000000;
+  padding: 10px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 50px;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+  background: black;
+  color: white;
+}
+.dark-mode {
+  background-color: black;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.light-mode {
+  background-color: white;
+  color: black;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  transition: transform 0.3s ease-in-out;
+}
+.container:hover {
+  transform: scale(1.02);
+}
+
+.input-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  margin-right: 20px;
+}
+input:focus {
+  border-color: #ff4b5c;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  background: #ff758c;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-left: 8px;
+  transition: background 0.3s ease, transform 0.2s ease-in-out;
+}
+button:hover {
+  background: #ff4b5c;
+  transform: scale(1.1);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+li {
+  background: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  word-wrap: break-word;  /* ✅ Ensures long words break */
+  overflow-wrap: break-word; /* ✅ Forces words to wrap */
+  word-break: break-word; /* ✅ Breaks long words */
+  white-space: normal; /* ✅ Allows multiple lines */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  max-width: 100%; /* ✅ Prevents overflow */
+}
+
+.task-text {
+  flex: 1; /* ✅ Allows text to take full width */
+  overflow: hidden;
+  text-overflow: ellipsis; /* ✅ Shows "..." for overflowed text */
+  white-space: normal; /* ✅ Allows text wrapping */
+  word-break: break-word;
+}
+
+
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.edit-btn, .update-btn {
+  background: #ffcc00;
+  padding: 6px;
+  font-size: 14px;
+  border-radius: 50%;
+  margin-right: 20px;
+  transition: background 0.3s ease, transform 0.2s ease-in-out;
+
+}
+.edit-btn:hover {
+  background: #e6b800;
+  transform: scale(1.2);
+ 
+
+}
+
+.delete-btn {
+  background: #ff4b5c;
+  padding: 6px;
+  font-size: 14px;
+  transition: background 0.3s ease, transform 0.2s ease-in-out;
+  border-radius: 50%;
+
+}
+
+.delete-btn:hover {
+  background: #d63447;
+  transform: scale(1.2);
 }
