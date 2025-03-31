@@ -22,6 +22,11 @@ export default function App() {
     }
   }, [tasks]);
 
+  useEffect(() => {
+    localStorage.removeItem("tasks");  // 🔥 Old tasks delete on first load
+  }, []);
+  
+
   // 🔵 Toggle Dark Mode Effect
 useEffect(() => {
   if (darkMode) {
@@ -71,7 +76,7 @@ useEffect(() => {
   return (
     <div>
       <div className="header">
-        <h1>To-Do List</h1>
+        <h1>🎯To-Do List</h1>
         <button className="toggle-btn" onClick={() => setDarkMode(!darkMode)}>
           {darkMode ? "🌞 Light Mode" : "🌙 Dark Mode"}
         </button>

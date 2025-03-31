@@ -35,12 +35,15 @@ body {
   box-sizing: border-box;
 
 }
-
+body, .container {
+  transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+}
 .dark-mode {
   background: linear-gradient(-45deg, #141e30, #243b55, #2c3e50, #000000);
   animation: gradientDark 6s ease infinite;
   transition: all 0.5s ease;
 }
+
 
 .header {
   width: 100%;
@@ -59,6 +62,12 @@ h1 {
   color: rgb(252, 252, 252);
   font-size: 24px;
   margin: 0;
+  transition: color 0.5s ease-in-out;
+}
+
+.light-mode h1{
+  color: rgb(17, 4, 76);
+
 }
 
 .toggle-btn {
@@ -82,6 +91,29 @@ h1 {
   background-color: black;
   color: white;
 }
+
+.dark-mode li {
+  background: #333;  /* Dark background */
+  color: white;       /* White text */
+}
+
+.dark-mode .task-text {
+  color: white;       /* White text */
+}
+
+.dark-mode .edit-input {
+  background: #555;
+  color: white;
+  border: 1px solid white;
+}
+
+.dark-mode .container {
+  background: #222;  /* Dark background */
+  color: white;       /* White text */
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+  transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
 
 .light-mode {
   background-color: white;
