@@ -46,11 +46,17 @@ export default function App() {
   };
 
   // Handle Enter key press
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      addTask();
+ // Handle Enter key press for both adding & updating task
+const handleKeyDown = (e) => {
+  if (e.key === "Enter") {
+    if (editIndex !== null) {
+      addTask();  // If editing, update task
+    } else if (task.trim() !== "") {
+      addTask();  // If new task, add it
     }
-  };
+  }
+};
+
 
   // Toggle Task Completion
   const toggleTask = (index) => {
@@ -102,6 +108,7 @@ export default function App() {
                   value={task}
                   onChange={(e) => setTask(e.target.value)}
                   onKeyDown={handleKeyDown}
+                  placeholder="Enter a task..."
                   autoFocus
                 />
               ) : (
