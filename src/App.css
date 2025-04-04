@@ -45,6 +45,8 @@ body, .container {
   animation: gradientDark 6s ease infinite;
   transition: all 0.5s ease;
   background-size: 300% 300%; 
+   background-repeat: no-repeat;
+   background-attachment: fixed;
 }
 .dark-mode .header{
   background: linear-gradient(-45deg, #141e30, #243b55, #2c3e50, #000000);
